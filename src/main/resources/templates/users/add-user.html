@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<script type="application/javascript">
+  $(".addUserModalClose").on("click", function () {
+    $("#addUserModal").modal('hide');
+  });
+</script>
+<form action="#" th:action="@{/app/user/create-user.html}" method="post" th:object="${createUser}">
+  <div class="modal-header">
+    <h5 class="modal-title" id="addUserModalTitle">Create User</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <label class="col-md-3 col-form-label">Username</label>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Username" th:field="*{userCode}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <label class="col-md-3 col-form-label">Password</label>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" th:field="*{userPass}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <label class="col-md-3 col-form-label">First Name</label>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="First Name" th:field="*{firstName}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <label class="col-md-3 col-form-label">Last Name</label>
+      <div class="col-md-9">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Last Name" th:field="*{lastName}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <label class="col-md-3 col-form-label">Role</label>
+      <div class="col-md-9">
+        <div class="form-group">
+          <select class="select2" th:field="*{userRole}">
+            <option th:each="role: ${ROLES}" th:value="${role.roleCode}" th:text="${role.roleName}"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary addUserModalClose" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+</body>
+</html>

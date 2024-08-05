@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	  layout:decorate="~{layouts/home_layout.html}">
+<head>
+  <title>Edit </title>
+  
+</head>
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: May 30 2023 with Bootstrap v5.3.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+
+<body>
+
+  <!-- ======= Header ======= -->
+  
+  <!-- ======= Sidebar ======= -->
+  
+  <main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+      <h1>Edit-Purchase</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+      </ol>
+    </div><!-- End Page Title -->
+
+   <div th:if="${session.message}" class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+  <form action="#" th:action="@{/api/purchase/update/{id}(id=${details.id})}" method="post" th:object="${details}">
+    <div class="container">
+      <div class="card py-4 px-4">
+		  
+		  <div class="row">
+                    
+                    <div class="col-md-4 text-start">
+						<label>Chassis Number</label>
+                        <input type="text" class="form-control" th:field="*{chassis_number}" th:value="${details.chassis_number}">
+                    </div>
+                    
+                    <div class="col-md-4 text-start">
+						<label>Motor Number</label><br>
+						<input type="text" class="form-control" th:field="*{moter_number}" th:value="${details.moter_number}">                   
+				    </div>
+                    
+                    <div class="col-md-4 text-start">
+						<label>Ex-Showroom Price</label>
+						<input type="text" class="form-control" th:field="*{onRoadPrice}" th:value="${details.onRoadPrice}">
+					</div>
+		</div>
+		
+		<div class="row">
+                    
+                    <div class="col-md-4 text-start">
+						<label>Hypothecation Charges</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    
+                    <div class="col-md-4 text-start">
+						<label>HSRP Charges</label><br>
+						<input type="text" class="form-control">                   
+				    </div>
+                    
+                    <div class="col-md-4 text-start">
+						<label>Driving License Charges</label>
+						<input type="text" class="form-control">
+					</div>
+		</div>
+		
+		<div class="row">
+                    
+                    <div class="col-md-4 text-start">
+						<label>Hypothecation Charges</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    
+                    <div class="col-md-4 text-start">
+						<label>HSRP Charges</label><br>
+						<input type="text" class="form-control">                   
+				    </div>
+                    
+                    <div class="col-md-4 text-start">
+						<label>Driving License Charges</label>
+						<input type="text" class="form-control">
+					</div>
+		</div>
+        
+        <div class="form-group mt-3">
+          <button class="btn btn-primary btn-user btn-block" type="submit">ADD</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</main><!-- End #main -->
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script th:src="@{/js/main.js}"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home_layout.html}">
+
+<head>
+    <title>Sales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
+            margin: 0;
+        }
+
+        #main {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        .col-md-3,
+        .col-md-6 {
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Add more styling as needed */
+    </style>
+</head>
+
+<body>
+
+<main id="main" class="main" layout:fragment="content">
+    <form id="updateForm" th:action="@{/api/sales/partPayment/update/{id}(id=${sales.sales_id})}" method="post"
+          th:object="${sales}">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="id">ID:</label>
+                    <input type="text" class="form-control" id="id" th:value="${sales.sales_id}"
+                           th:field="*{sales_id}" readonly placeholder="ID">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="customerName">Customer Name:</label>
+                    <input type="text" class="form-control" id="customerName" th:value="${sales.sales_customer_name}"
+                           th:field="*{sales_customer_name}" readonly placeholder="Customer Name">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="variantOrSpareParts">Item Details:</label>
+                    <input type="text" class="form-control" id="variantOrSpareParts"
+                           th:value="${sales.variantName} ? ${sales.variantName} : ${sales.sparePartsName}"
+                           readonly placeholder="Item Details">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cashAmount">Cash Amount:</label>
+                    <input type="text" class="form-control" id="cashAmount" th:value="${sales.cashAmount}"
+                           th:field="*{cashAmount}" placeholder="Cash Amount">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="checkAmount">Cheque Amount:</label>
+                    <input type="text" class="form-control" id="checkAmount" th:value="${sales.checkAmount}"
+                           th:field="*{checkAmount}" placeholder="Cheque Amount">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="checkNumber">Cheque Number:</label>
+                    <input type="text" class="form-control" id="checkNumber" th:value="${sales.checkNumber}"
+                           th:field="*{checkNumber}" placeholder="Cheque Number">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="onlineAmount">Online Amount:</label>
+                    <input type="text" class="form-control" id="onlineAmount" th:value="${sales.onlineAmount}"
+                           th:field="*{onlineAmount}" placeholder="Online Amount">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="onlinetransactiontype">Online Transaction Type:</label>
+                    <input type="text" class="form-control" id="onlinetransactiontype" th:value="${sales.online_tran_type}"
+                           th:field="*{online_tran_type}" placeholder="Online Transaction Type">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="onlinetransactionid">Online Transaction Id:</label>
+                    <input type="text" class="form-control" id="onlinetransactionid" th:value="${sales.online_tran}"
+                           th:field="*{online_tran}" placeholder="Online Transaction Id">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="guarantorAmount">Guarantor Amount:</label>
+                    <input type="text" class="form-control" id="guarantorAmount" th:value="${sales.guarantorAmount}"
+                           th:field="*{guarantorAmount}" placeholder="Guarantor Amount">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tranaction_date">Transaction Date:</label>
+                    <input type="text" id="tranaction_date" class="form-control"
+                           placeholder="Transaction Date (dd-mm-yyyy)" onfocus="(this.type='date')"
+                           onblur="(this.type='text')" th:field="*{tranaction_date}" required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</main>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+</body>
+</html>

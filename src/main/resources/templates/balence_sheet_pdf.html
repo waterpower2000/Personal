@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/blank_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Sheet</title>
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css}">
+    <style>
+        .card-body{
+            height: 415px;
+            overflow: auto;
+        }
+        .card-body2{
+            height: 500px;
+            overflow: auto;
+        }
+        .card-body3{
+            height: 350px;
+            overflow: auto;
+        }.card-body4{
+            height: 300px;
+            overflow: auto;
+        }
+        .txt{
+    border: 1px solid black;
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5a5a5a9e;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid #97979791;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.text-start {
+    text-align: center;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+<main layout:fragment="blank_content">
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pagetitle">
+                    <h1>Trading Account</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-4 text-right">
+                <table class="table">
+                    <tr>
+                        <th>Date From</th>
+                        <td th:text="${CreateBalanceDTO.getDateFrom()}"></td>
+                    </tr>
+                    <tr>
+                        <th>Date To</th>
+                        <td th:text="${CreateBalanceDTO.getDateTo()}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-2 text-right">
+                <a th:href="@{'/api/balance/getBalanceSheet/pdf?from='+${CreateBalanceDTO.getDateFrom()}+'&to=' + ${CreateBalanceDTO.getDateTo()}}"><img th:src="@{/img/pdf (1).png}" alt="" style="height:40px;" ></a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div th:if="${session.message}" class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 fixed">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Debit</h5>
+                    <h4 class="card-title">Direct Expense Sheet</h4>
+                    <!-- Table with stripped rows -->
+                    <table class="table trading-debit" id="balance-sheet-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Particular</th>
+                            <th scope="col">Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>OPENING STOCK</td>
+                            <td th:text="${balanceSheetDTO.opening_stock}" id="opening-stock"></td>
+                        </tr>
+                        <tr>
+                            <td>TO EV PURCHASES</td>
+                            <td th:text="${balanceSheetDTO.purchase_amount}" id="car-purchases"></td>
+                        </tr>
+                        <tr>
+                            <td>TO EV PURCHASES GST</td>
+                            <td th:text="${balanceSheetDTO.purchase_gross_gst}" id="car-purchases-gst"></td>
+                        </tr>
+                        <tr th:each="entry : ${balanceSheetDTO.trading_debit_map.entrySet()}">
+                            <!-- Access key and value using Thymeleaf expressions -->
+                            <td th:text="${entry.key}"></td>
+                            <td th:text="${entry.value}" class="trading-debit-map"></td>
+                        </tr>
+                        <tr th:if="${balanceSheetDTO.profit >= 0}">
+                            <td>GROSS PROFIT</td>
+                            <td th:text="${balanceSheetDTO.profit}" id="trading-gross-profit"></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body3">
+                    <h5>Credit</h5>
+                    <h4 class="card-title">Direct Income Sheet</h4>
+                    <!-- Table with stripped rows -->
+                    <table class="table" id="table trading-credit">
+                        <thead>
+                        <tr>
+                            <th scope="col">Particular</th>
+                            <th scope="col">Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td>BY EV SALES</td>
+                            <td th:text="${balanceSheetDTO.sales_amount}" id="car-sales"></td>
+                        </tr>
+                        <tr>
+                            <td>BY SALES GST</td>
+                            <td th:text="${balanceSheetDTO.getSales_gross_gst()}" id="sales-gst"></td>
+                        </tr>
+                        <tr th:each="entry : ${balanceSheetDTO.trading_credit_map.entrySet()}">
+                            <!-- Access key and value using Thymeleaf expressions -->
+                            <td th:text="${entry.key}"></td>
+                            <td th:text="${entry.value}" class="trading-credit-map"></td>
+                        </tr>
+                        <tr th:if="${balanceSheetDTO.profit < 0}">
+                            <td>GROSS LOSS</td>
+                            <td th:text="${balanceSheetDTO.profit*-1}" id="trading-gross-loss"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="pagetitle">
+        <h1>Profit-Loss Account</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+        </ol>
+    </div><!-- End Page Title -->
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body2">
+                    <h5>Debit</h5>
+                    <h4 class="card-title">Indirect Expense Sheet</h4>
+                    <!-- Table with stripped rows -->
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Particular</th>
+                            <th scope="col">Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${balanceSheetDTO.profit < 0}">
+                            <td>TO GROSS LOSS</td>
+                            <td th:text="${balanceSheetDTO.profit*-1}" id="pl-gross-loss"></td>
+                        </tr>
+                        <tr th:each="entry : ${balanceSheetDTO.profitloss_debit_map.entrySet()}">
+                            <!-- Access key and value using Thymeleaf expressions -->
+                            <td th:text="${entry.key}"></td>
+                            <td th:text="${entry.value}" class="pl-debit-map"></td>
+                        </tr>
+                        <tr th:if="${balanceSheetDTO.getPl_gross_profit_loss() >= 0}">
+                            <td>TO NET PROFIT</td>
+                            <td th:text="${balanceSheetDTO.getPl_gross_profit_loss()}" id="pl-net-profit"></td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body3">
+                    <h5>Credit</h5>
+                    <h4 class="card-title">Indirect Income Sheet</h4>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Particular</th>
+                            <th scope="col">Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${balanceSheetDTO.profit >= 0}">
+                            <td>BY GROSS PROFIT</td>
+                            <td th:text="${balanceSheetDTO.profit}" id="pl-gross-profit"></td>
+                        </tr>
+                        <tr th:each="entry : ${balanceSheetDTO.profitloss_credit_map.entrySet()}">
+                            <!-- Access key and value using Thymeleaf expressions -->
+                            <td th:text="${entry.key}"></td>
+                            <td th:text="${entry.value}" class="pl-credit-map"></td>
+                        </tr>
+                        <tr th:if="${balanceSheetDTO.getPl_gross_profit_loss() < 0}">
+                            <td>BY NET LOSS</td>
+                            <td th:text="${balanceSheetDTO.getPl_gross_profit_loss()*-1}" id="pl-net-loss"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    Balance Sheet Implementation Start     -->
+    <!--    <br><br>-->
+    <div class="pagetitle">
+        <h1>Balance Sheet</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+        </ol>
+    </div><!-- End Page Title -->
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body3">
+                    <h5 class="card-title">Liabilities</h5>
+                    <!-- Table with stripped rows -->
+                    <table class="table liabilities-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Particular</th>
+                            <th scope="col">Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="entry : ${balanceSheetDTO.balancesheet_debit_map.entrySet()}">
+                            <!-- Access key and value using Thymeleaf expressions -->
+                            <td th:text="${entry.key}"></td>
+                            <td th:text="${entry.value}" class="bs-liabilities-map"></td>
+                        </tr>
+                        <tr th:if="${balanceSheetDTO.profit >= 0}">
+                            <td>TOTAL LIABILITIES</td>
+                            <td id="totalLiabilities" th:text="${balanceSheetDTO.total_liablities}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="card">
+
+                <div class="card-body3">
+                    <h5 class="card-title">Assets</h5>
+
+
+                    <!-- Table with stripped rows -->
+                    <table class="table assets-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Particular</th>
+                            <th scope="col">Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>BY CLOSING STOCK</td>
+                            <td th:text="${balanceSheetDTO.closing_stock}"></td>
+                        </tr>
+                        <tr th:each="entry : ${balanceSheetDTO.balancesheet_credit_map.entrySet()}">
+                            <!-- Access key and value using Thymeleaf expressions -->
+                            <td th:text="${entry.key}"></td>
+                            <td th:text="${entry.value}" class="bs-assets-map"></td>
+                        </tr>
+                        <tr th:if="${balanceSheetDTO.profit >= 0}">
+                            <td>TOTAL ASSETS</td>
+                            <td id="totalAssets" th:text="${balanceSheetDTO.total_assets}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    Balance Sheet Implementation End     -->
+
+
+</main>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Template Main JS File -->
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

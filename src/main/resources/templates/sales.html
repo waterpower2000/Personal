@@ -1,0 +1,1131 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/blank_layout.html}">
+<head>
+    <title>Sales</title>
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: NiceAdmin
+    * Updated: May 30 2023 with Bootstrap v5.3.0
+    * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+
+    <style>
+        /*form styles*/
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 30px;
+    }
+
+    #msform fieldset {
+        background: white;
+        border: 0 none;
+        border-radius: 8px;
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+        padding: 20px 30px;
+        box-sizing: border-box;
+        width: 100%;
+        margin: auto;
+
+        /*stacking fieldsets above each other*/
+        position: relative;
+    }
+
+    /*Hide all except first fieldset*/
+    #msform fieldset:not(:first-of-type) {
+        display: none;
+    }
+    #progressbar li.active:after {
+        background: #2098ce;
+        color: white;
+    }
+    /*inputs*/
+    /* #msform input, #msform textarea {
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: montserrat;
+        color: #2C3E50;
+        font-size: 13px;
+    } */
+
+    #msform input:focus, #msform textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 1px solid #2098ce;
+        outline-width: 0;
+        transition: All 0.5s ease-in;
+        -webkit-transition: All 0.5s ease-in;
+        -moz-transition: All 0.5s ease-in;
+        -o-transition: All 0.5s ease-in;
+    }
+
+    /*buttons*/
+    #msform .action-button {
+        width: 100px;
+        background: #2098ce;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 25px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+    #msform .action-button:hover, #msform .action-button:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #2098ce;
+    }
+
+    #msform .action-button-previous {
+        width: 100px;
+        background: #aCbEd0;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 25px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+    #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #aCbEd0;
+    }
+
+    /*headings*/
+    .fs-title {
+        font-size: 18px;
+        text-transform: uppercase;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+
+    .fs-subtitle {
+        font-weight: normal;
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    /*progressbar*/
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        /*CSS counters to number the steps*/
+        counter-reset: step;
+    }
+
+    #progressbar li {
+        list-style-type: none;
+        color: #666;
+        text-transform: uppercase;
+        font-size: 9px;
+        width: 25%;
+        float: left;
+        position: relative;
+        letter-spacing: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #progressbar li:before {
+        content: counter(step);
+        counter-increment: step;
+        width: 24px;
+        height: 24px;
+        line-height: 26px;
+        display: block;
+        font-size: 12px;
+        color: #333;
+        background: #e6e6e6;
+        border-radius: 25px;
+        margin: 0 auto 10px auto;
+        position: relative;
+        z-index: 3;
+    }
+
+    /*progressbar connectors*/
+    #progressbar li:after {
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: #eeeeee;
+        position: absolute;
+        left: -52%;
+        top: 9px;
+        z-index: 1; /*put it behind the numbers*/
+    }
+
+    #progressbar li:first-child:after {
+        /*connector not needed before the first step*/
+        content: none;
+    }
+
+    /*marking active/completed steps blue*/
+    /*The number of the step and the connector before it = blue*/
+    #progressbar li.active:before, #progressbar li.active:after {
+        background: #2098ce;
+        color: white;
+    }
+    #blank{
+        display: none;
+    }
+    .cash{
+        border: 1px solid black;
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #5a5a5a9e;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid #97979791;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    .txt{
+        border: 1px solid black;
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #5a5a5a9e;
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid #97979791;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    ::marker {
+        unicode-bidi: isolate;
+        font-variant-numeric: tabular-nums;
+        text-transform: none;
+        text-indent: 0px !important;
+        text-align: end !important;
+        text-align-last: end !important;
+    }
+    #print{
+        font-weight: 900;
+        color: #2098ce;
+    }
+
+    label {
+       font-size: 12px;
+        font-family: "Poppins", sans-serif;
+        color: #828282;
+        text-align: left!important;
+        margin-bottom: 8px;
+    }
+
+    .form-label {
+        font-size: 13px;
+        font-family: "Poppins", sans-serif;
+        color: #828282;
+
+    }
+
+    .hide{
+              display: none;
+          }
+
+
+    </style>
+
+</head>
+
+<body>
+
+<main layout:fragment="blank_content">
+    <header id="header" class="header fixed-top d-flex align-items-center bg-primary">
+
+        <div class="d-flex align-items-center justify-content-between mt-2">
+            <a href="#" class="logo d-flex align-items-center">
+                <img th:src="@{/img/mayuri.png}" alt="">
+                <!-- <span class="d-none d-lg-block">NiceAdmin</span> -->
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+
+                <li class="nav-item dropdown pe-3">
+
+                    <div class="look">
+                        <a class="dropdown-item d-flex align-items-center" th:href="@{/api/logout}">
+
+                            <button type="button" class="btn btn-light"><i class="bi bi-box-arrow-right"></i>Log Out
+                            </button>
+
+                        </a>
+                    </div>
+                </li>
+
+            </ul><!-- End Profile Dropdown Items -->
+            </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav>
+        <!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <!--
+                  <li class="nav-item">
+                    <a class="nav-link" th:href="@{/api/home/dashboard}">
+                      <i class="bi bi-grid"></i>
+                      <span>Dashboard</span>
+                    </a>
+                  </li> End Dashboard Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/api/inventory/get}">
+                    <i class="bi bi-grid"></i>
+                    <span>Inventory Management</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/api/vehicle/add/vehicle}">
+                    <i class="bi bi-grid"></i>
+                    <span>Add Vehicle</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/api/home/purchase}">
+                    <i class="bi bi-grid"></i>
+                    <span>Purchase</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/api/home/sales}">
+                    <i class="bi bi-grid"></i>
+                    <span>Sales</span>
+                </a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link collapsed" th:href="@{/api/balance/get}">-->
+<!--                    <i class="bi bi-grid"></i>-->
+<!--                    <span>Balance Sheet</span>-->
+<!--                </a>-->
+<!--            </li>-->
+            <li th:class="${reg == 'ALL' ? 'nav-item' : 'hide'}">
+                <a class="nav-link collapsed" th:href="@{/app/user/add-users.html}">
+                    <i class="bi bi-grid"></i>
+                    <span>User Management</span>
+                </a>
+            </li>
+            <li th:class="${reg == 'ALL' ? 'nav-item' : 'hide'}">
+                <a class="nav-link collapsed" th:href="@{/api/region/add}">
+                    <i class="bi bi-grid"></i>
+                    <span>Region Management</span>
+                </a>
+            </li>
+            <li th:class="${reg == 'ALL' ? 'nav-item' : 'hide'}">
+                <a class="nav-link collapsed" th:href="@{/api/stock/get}">
+                    <i class="bi bi-grid"></i>
+                    <span>Stock Transfer</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Accounts</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/api/sales/getIncome}">
+                            <span>Income Ledger</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/api/sales/getExpense}">
+                            <span>Expense Ledger</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/api/miscellaneous/get}">
+                            <span>Miscellaneous Entry</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/api/sales/getMain}">
+                            <span>Main Ledger</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/api/balance/get}">
+                            <span>Balance Sheet</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/api/sales/partPayment/getIncome}">
+                            <span>Pending Payment</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </aside>
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Sales</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+            </ol>
+        </div><!-- End Page Title -->
+
+        <section class="section dashboard">
+            <div th:if="${session.message}" class="container">
+                <div class="alert alert-success text-center" role="alert">
+                    <span th:text="${session.message.content}"></span>
+                </div>
+
+                <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+            </div>
+            <!-- MultiStep Form -->
+            <div class="row">
+                <div class="col-md-12 col-md-offset-3">
+                    <form id="msform" method="post" th:action="@{/api/sales/save}" th:object="${createSalesDto}">
+                        <!-- progressbar -->
+                        <ul id="progressbar">
+                            <li class="active">Category Details</li>
+                            <li>Customer Details</li>
+                            <li>Battery Details</li>
+                            <li>Payment Details</li>
+                        </ul>
+                        <script layout:fragment="normalScript" type="application/javascript">
+
+                            function getOnRoadPrice(variantId){
+                             console.log(variantId)
+                              $.ajax({
+                                     url: '/api/sales/get/on/road/price?variantId='+variantId,
+                                     type: 'get',
+                                     success: function(data){
+                                        document.getElementById("myText").value = data;
+                                     },
+                                     error: function(error) {
+                                       document.getElementById("myText").value = 'not applicable';
+                                     }
+                                 });
+                            }
+
+                            function getOnPurchasePrice(variantId){
+                             console.log(variantId)
+                              $.ajax({
+                                     url: '/api/sales/get/on/purchase/price?variantId='+variantId,
+                                     type: 'get',
+                                     success: function(data){
+                                        document.getElementById("myText1").value = data;
+                                     },
+                                     error: function(error) {
+                                       document.getElementById("myText1").value = 'not applicable';
+                                     }
+                                 });
+                            }
+
+                            function getType(details){
+                             document.getElementById("nm").disabled = true;
+                             document.getElementById("phone").disabled = true;
+                             document.getElementById("add").disabled = true;
+                             document.getElementById("chk_no").disabled = true;
+                             document.getElementById("bnk_nm").disabled = true;
+                             document.getElementById("amt").disabled = true;
+                              var a = null;
+                              var clone = $("#add_html").clone();
+                              console.log(details)
+                              if(details === 'Spare_Parts'){
+
+
+                                 $.ajax({
+                                     url: '/api/sales/get/spare/parts/variants',
+                                     type: 'get',
+                                     success: function(data){
+     <!--                                  $('#JobDiv_id').find('option').remove();-->
+                                       $('#JobDiv_id').empty();
+                                       $.each(data, function(index, values) {
+                                         $('#JobDiv_id').append(' <option value="none" selected disabled hidden>Select an Option</option> '+'<option value="' + values.id + '">' + values.sparePartsName + '</option>');
+                                       });
+                                     },
+                                     error: function(error) {
+                                       alert(error.StatusText)
+                                     }
+                                 });
+
+                              }
+                              else{
+
+                                  $.ajax({
+                                     url: '/api/sales/get/vehicle/variants',
+                                     type: 'get',
+                                     success: function(data){
+     <!--                                  $('#JobDiv_id').find('option').remove();-->
+                                       $('#JobDiv_id').empty();
+                                       $.each(data, function(index, values) {
+                                         $('#JobDiv_id').append(' <option value="none" selected disabled hidden>Select an Option</option> '+'<option value="' + values.id + '">' + values.variantName +' ('+values.colour + ', Chessis No.-' +values.chassis_number+  ')</option>');
+                                       });
+                                     },
+                                     error: function(error) {
+                                       alert(error.StatusText)
+                                     }
+                                  });
+
+                              }
+
+                            }
+
+                            function getGurrantter(){
+                                        if ($("#chkPassport").is(":checked")) {
+                                              document.getElementById("nm").disabled = false;
+                                              document.getElementById("phone").disabled = false;
+                                              document.getElementById("add").disabled = false;
+
+                                        } else {
+                                              document.getElementById("nm").disabled = true;
+                                              document.getElementById("phone").disabled = true;
+                                              document.getElementById("add").disabled = true;
+
+                                          }
+                             }
+
+                        </script>
+                        <!-- fieldsets -->
+
+                        <fieldset>
+                            <!-- <h2 class="fs-title">VEICHLE DETAILS</h2> -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <select id="type" class="form-select form-select-lg" th:style="@{font-size:15px}"
+                                            required th:field="*{type}" onchange="getType(this.value)">
+                                        <option value="none">Select an Option</option>
+                                        <option value="Vehicle">Vehicle</option>
+                                        <option value="Spare_Parts">Spare_Parts</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="JobDiv_id" class="form-select form-select-lg"
+                                            th:style="@{font-size:15px}" required
+                                            th:field="*{eriksha_variant_details_id}"
+                                            onchange="getOnRoadPrice(this.value)">
+                                    </select>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <input type="text" id="sales_tranaction_date" class="form-control"
+                                           placeholder="Sales Tranaction Date(dd-mm-yyyy)" onfocus="(this.type='date')"
+                                           onblur="(this.type='text')" th:field="*{sales_tranaction_date}" required>
+                                </div>
+                            </div>
+                            <br>
+                            <input type="button" name="next" class="next action-button" value="Next"/>
+                        </fieldset>
+                        <fieldset>
+                            <!-- <h2 class="fs-title">Social Profiles</h2> -->
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" placeholder="Customer Name"
+                                           th:field="*{sales_customer_name}" required="required">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">91</span>
+                                        <input type="text" class="form-control" placeholder="Mobile Number"
+                                               aria-label="phone" aria-describedby="basic-addon1"
+                                               th:field="*{sales_customer_number}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="chkPassport">
+                                        <input type="checkbox" id="chkPassport" onchange="getGurrantter()"/>
+                                        Guarantor
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <input id="nm" type="text" class="form-control" placeholder="Guarantor Name"
+                                           aria-label="adharcard" th:field="*{gurranterName}">
+                                </div>
+                                <div class="col-md-4">
+                                    <input id="phone" type="text" class="form-control" placeholder="Guarantor Phone"
+                                           aria-label="pancard" th:field="*{gurranterPhoneNumber}">
+                                </div>
+                                <div class="col-md-4">
+                                    <input id="add" type="text" class="form-control" placeholder="Guarantor Address"
+                                           aria-label="gstnum" th:field="*{gurranterAddress}">
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" placeholder="Adhar Card"
+                                           aria-label="adharcard" th:field="*{sales_customer_AadhaarCard}">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" placeholder="Pan Card" aria-label="pancard"
+                                           th:field="*{sales_customer_PanCard}">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" placeholder="GST Number" aria-label="gstnum"
+                                           th:field="*{sales_customer_GSTNumber}">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <textarea class="form-control" placeholder="Address" id="floatingTextarea"
+                                              style="height: 100px;" th:field="*{sales_customer_address}"></textarea>
+                                </div>
+                            </div>
+
+
+                            <input type="button" name="previous" class="previous action-button-previous"
+                                   value="Previous"/>
+                            <input type="button" name="next" class="next action-button" value="Next"/>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <input type="text" id="start-dt" class="form-control" placeholder="Battery Number 1"
+                                           th:field="*{battery_1}">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="start-dt" class="form-control" placeholder="Battery Number 2"
+                                           th:field="*{battery_2}">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="start-dt" class="form-control" placeholder="Battery Number 3"
+                                           th:field="*{battery_3}">
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <input type="text" id="start-dt" class="form-control" placeholder="Battery Number 4"
+                                           th:field="*{battery_4}">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="start-dt" class="form-control" placeholder="Battery Number 5"
+                                           th:field="*{battery_5}">
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+
+                                <div class="col-md-6">
+                                    <input type="text" id="start-dt" class="form-control"
+                                           placeholder="Warranty Start Date(dd-mm-yyyy)" onfocus="(this.type='date')"
+                                           onblur="(this.type='text')" th:field="*{battery_start}">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text" id="start-dt" class="form-control"
+                                           placeholder="Warranty End Date(dd-mm-yyyy)" onfocus="(this.type='date')"
+                                           onblur="(this.type='text')" th:field="*{battery_end}">
+                                </div>
+
+                            </div>
+
+
+                            <br>
+                            <input type="button" name="previous" class="previous action-button-previous"
+                                   value="Previous"/>
+                            <input type="button" name="next" class="next action-button" value="Next"/>
+                        </fieldset>
+
+                        <fieldset>
+
+                            <div class="row">
+                                <div class="col-md-4 text-start">
+                                    <label>Ex-Showroom Price</label><br>
+                                    <input type="text" class="form-control" id="myText" placeholder="on Road Price"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           aria-label="price" th:value="0000">
+                                </div>
+
+                                <div class="col-md-4 text-start">
+                                    <label>Registration Charges</label><br>
+                                    <input type="text" class="form-control" id="p1"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           placeholder="-----" th:field="*{registrationCharge}">
+                                </div>
+
+                                <div class="col-md-4 text-start">
+                                    <label>Insurance Charges</label><br>
+                                    <input type="text" class="form-control" id="p2"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           placeholder="-----" th:field="*{insuranceCharge}">
+                                </div>
+
+                            </div>
+
+                            <br>
+                            <div class="row">
+
+                                <div class="col-md-4 text-start">
+                                    <label>Hypothecation Charges</label>
+                                    <input type="text" class="form-control" id="p3"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           placeholder="-----" th:field="*{hypoCharge}">
+                                </div>
+
+                                <div class="col-md-4 text-start">
+                                    <label>HSRP Charges</label><br>
+                                    <input type="text" class="form-control" id="p4"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           placeholder="-----" th:field="*{hsrfCharge}">
+                                </div>
+
+                                <div class="col-md-4 text-start">
+                                    <label>Driving License Charges</label>
+                                    <input type="text" class="form-control" id="p5"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           placeholder="-----" th:field="*{licenseCharge}">
+                                </div>
+
+
+                            </div>
+                            <br>
+                            <div class="row">
+
+
+                                <div class="col-md-3 text-start">
+                                    <label>On Road Price</label>
+                                    <input type="text" class="form-control" id="myText1" placeholder="Ex-showroom Price"
+                                           aria-label="price" th:value="0000">
+                                </div>
+
+
+                                <div class="col-md-3 text-start">
+                                    <label>
+                                        <div class="form-check">
+                                            <div class="d-flex justify-content-between">
+                                                <input class="form-check-input" type="radio" name="gridRadios"
+                                                       id="gridRadios1" value="option1">
+                                                <label class="form-check-label ms-1" for="gridRadios1"
+                                                       style="    margin-right: 26px;">
+                                                    Discount %
+                                                </label>
+                                                <input class="form-check-input" type="radio" name="gridRadios"
+                                                       id="gridRadios1" value="option2" checked="">
+                                                <label class="form-check-label ms-1" for="gridRadios1">
+                                                    Discount Amount
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="-----" id="p0"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           aria-label="price" th:field="*{discount}">
+                                </div>
+
+                                <div class="col-md-3 text-start">
+                                    <label>GST Percentage</label>
+                                    <input type="text" id="sales_gst" class="form-control" placeholder="-----"
+                                           onblur="calculate('myText','p1','p2','p3','p4','p5','myText1', 'p0', 't0', 'sales_gst')"
+                                           aria-label="pricequantity" th:field="*{sales_gst}">
+                                </div>
+
+                                <div class="col-md-3 text-start">
+                                    <label>Total Price</label>
+                                    <input type="text" id="t0" class="form-control"
+                                           placeholder="Sale Price Per Quantity" aria-label="pricequantity"
+                                           th:field="*{salesPrice}">
+                                </div>
+
+
+                            </div>
+
+
+                            <div id="blank" class="row mt-3">
+                                <div class="col-md-4 text-start">
+                                    <input id="chk_no" type="text" class="form-control" placeholder="Cheque Number"
+                                           aria-label="adharcard" th:field="*{checkNumber}">
+                                </div>
+                                <div class="col-md-4 text-start">
+                                    <input id="bnk_nm" type="text" class="form-control" placeholder="Bank Name"
+                                           aria-label="pancard" th:field="*{bankName}">
+                                </div>
+                                <div class="col-md-4 text-start">
+                                    <input id="amt" type="text" class="form-control" placeholder="Cheque Amount"
+                                           aria-label="gstnum" th:field="*{checkAmount}">
+                                </div>
+                            </div>
+                            <br>
+                            <script>
+                                calculate = function (a,p1,p2,p3,p4,p5,a1, p, t, sales_gst) {
+                                    var ex_amount = document.getElementById(a).value;
+
+                                    var reg=document.getElementById(p1).value;
+                                    var ins = document.getElementById(p2).value;
+                                    var hypo = document.getElementById(p3).value;
+                                    var hsrf = document.getElementById(p4).value;
+                                    var driving = document.getElementById(p5).value;
+                                    var discount = document.getElementById(p).value;
+                                    var sales_gst=document.getElementById(sales_gst).value;
+                                    var onroadprice = parseInt(ex_amount)+parseInt(reg)+parseInt(ins)+parseInt(hypo)+parseInt(hsrf)+parseInt(driving)
+                                    document.getElementById(a1).value = parseInt(onroadprice);
+                                    if(discount<100 && discount>0)
+                                    {
+                                        discount=(discount*ex_amount)/100;
+                                    }
+                                    var total_price=parseInt(ex_amount)-parseInt(discount);
+                                    var gst_amount=(total_price*parseInt(sales_gst))/100;
+                                    document.getElementById(t).value = total_price+gst_amount+parseInt(reg)+parseInt(ins)+parseInt(hypo)+parseInt(hsrf)+parseInt(driving);}
+                            </script>
+
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 mt-2 text-start">
+                                        <label class="form-check-label" for="gridRadios1">
+                                            Transaction Type:
+                                        </label>
+                                        <div class="cash">Cash</div>
+                                    </div>
+                                    <div class="col-md-6 mt-2 text-start">
+                                        <label class="form-check-label" for="gridRadios1">
+                                            Transaction Amount:
+                                        </label>
+                                        <input id="cash" class="txt" type="text" placeholder="Cash Amount" name="txt"
+                                               th:field="*{cashAmount}"/></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mt-2 text-start">
+                                        <details class="cash">
+                                            <summary>Cheque</summary>
+                                            <p>
+                                            <div class="row mt-3" id="myDIV">
+                                                <div class="col-md-6">
+                                                    <input id="chk_no" type="text" class="form-control"
+                                                           placeholder="Cheque Number" aria-label="adharcard"
+                                                           th:field="*{checkNumber}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input id="bnk_nm" type="text" class="form-control"
+                                                           placeholder="Bank Name" aria-label="pancard"
+                                                           th:field="*{bankName}">
+                                                </div>
+
+                                            </div>
+                                            </p>
+                                        </details>
+                                    </div>
+                                    <div class="col-md-6 mt-2"><input id="check" class="txt" type="text" name="txt"
+                                                                      placeholder="Cheque Amount"
+                                                                      th:field="*{checkAmount}"/></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mt-2 text-start">
+                                        <details class="cash">
+                                            <summary>Online</summary>
+                                            <p>
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <input id="tran_no" type="text" class="form-control"
+                                                           placeholder="Transaction Type" aria-label="adharcard"
+                                                           th:field="*{online_tran_type}">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <input id="tran_no" type="text" class="form-control"
+                                                           placeholder="Transaction Number" aria-label="adharcard"
+                                                           th:field="*{online_tran}">
+                                                </div>
+
+
+                                            </div>
+
+                                            </p>
+
+                                        </details>
+
+                                    </div>
+                                    <div class="col-md-6 mt-2">
+                                        <input class="txt" id="online" type="text" name="txt"
+                                               placeholder="Online Amount" th:field="*{onlineAmount}"/>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mt-2 text-start">
+                                        <div class="cash">Financer</div>
+                                    </div>
+                                    <div class="col-md-6 mt-2">
+                                        <input class="txt" id="gamt" type="text" name="txt" aria-label="price"
+                                               th:value="0000" placeholder="Financer Amount"
+                                               th:field="*{guarantorAmount}"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mt-4 text-start">Total Sum :-</div>
+                                    <div class="col-md-6 mt-2">
+
+                                        <span id="sum" class="txt">0</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mt-4"></div>
+                                    <div class="col-md-4 mt-2">
+
+                                        <p><span id="print"> </span></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <script>
+
+                                $(document).ready(function() {
+
+                 //iterate through each textboxes and add keyup
+                 //handler to trigger sum event
+                 $(".txt").each(function() {
+                   $(this).keyup(function() {
+                     calculateSum();
+                   });
+                 });
+               });
+
+
+
+               /*function printValid(sum) {
+                   var price=document.getElementById("t0").value;
+                   if(sum===price)
+                   document.getElementById("print").innerHTML = "The sum is equal";
+
+                   else
+                   document.getElementById("print").innerHTML = "The sum is not matching";
+               }*/
+
+               /*parseFloat(price);
+                     if(sum===price)
+                   result = "The sum is equal";
+
+                   else
+                   result = "The sum is not matching";
+                   */
+
+               function calculateSum() {
+
+                 var sum = 0;
+                 var result;
+                 var price;
+                 //iterate through each textboxes and add the values
+                 $(".txt").each(function() {
+
+                   //add only if the value is number
+                   if (!isNaN(this.value) && this.value.length != 0) {
+                     sum += parseInt(this.value);
+                   price=parseInt(document.getElementById("t0").value);
+                   if(price == sum)
+                   {
+                       document.getElementById("print").innerHTML = "PROCEED";
+                   }
+                   else if(sum==0)
+                   {
+                    document.getElementById("print").innerHTML = "NOT MATCHING ON ROAD PRICE";
+                   }
+                   else
+                   {
+                       document.getElementById("print").innerHTML = "NOT MATCHING ON ROAD PRICE";
+                   }
+                   }
+                 });
+
+                 //.toFixed() method will roundoff the final sum to 2 decimal places
+                 $("#sum").html(sum);
+
+
+
+               }
+                            </script>
+
+                            <input type="button" name="previous" class="previous action-button-previous"
+                                   value="Previous"/>
+                            <button name="previous" class="btn btn-primary btn-user btn-block action-button"
+                                    th:style="@{border-radius:20px;}" type="submit">Submit
+                            </button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <!-- /.MultiStep Form -->
+        </section>
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <!-- <div class="copyright">
+          &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        </div> -->
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+            <span>© All Rights reserved. Designed And Developed By
+        <a href="https://sysbean.com/" target="_blank">SYSBEAN</a></span>
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+        var current_fs, next_fs, previous_fs; //fieldsets
+    var left, opacity, scale; //fieldset properties which we will animate
+    var animating; //flag to prevent quick multi-click glitches
+
+    $(".next").click(function(){
+        if(animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();
+
+        //activate next step on progressbar using the index of next_fs
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({opacity: 0}, {
+            step: function(now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale current_fs down to 80%
+                scale = 1 - (1 - now) * 0.2;
+                //2. bring next_fs from the right(50%)
+                left = (now * 50)+"%";
+                //3. increase opacity of next_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({
+            'transform': 'scale('+scale+')',
+            'position': 'absolute'
+          });
+                next_fs.css({'left': left, 'opacity': opacity});
+            },
+            duration: 800,
+            complete: function(){
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".previous").click(function(){
+        if(animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        previous_fs = $(this).parent().prev();
+
+        //de-activate current step on progressbar
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+        //show the previous fieldset
+        previous_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({opacity: 0}, {
+            step: function(now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale previous_fs from 80% to 100%
+                scale = 0.8 + (1 - now) * 0.2;
+                //2. take current_fs to the right(50%) - from 0%
+                left = ((1-now) * 50)+"%";
+                //3. increase opacity of previous_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({'left': left});
+                previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+            },
+            duration: 800,
+            complete: function(){
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".submit").click(function(){
+        return false;
+    })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <script src="assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="assets/vendor/echarts/echarts.min.js"></script>
+    <script src="assets/vendor/quill/quill.min.js"></script>
+    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+</main>
+
+</body>
+</html>

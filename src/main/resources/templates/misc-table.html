@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/blank_layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css}">
+  <title></title>
+  <style>
+    /* *{
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+
+} */
+
+body{
+    border: 1px solid #adadad;
+    padding:20px;
+}
+.outer{
+    border: 1px solid black;
+    height: 1800px;
+    width: 100%;
+
+}
+i{
+    padding-left: 10px;
+}
+.inner1{
+    height: 900px;
+    width: 100%;
+    border: 1px solid black;
+}
+.inner2{
+    height: 600px;
+    width: 100%;
+    border: 1px solid black;
+}
+.inner3{
+    height: 300px;
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+}
+
+
+.A1{
+    height: 200px;
+    display: flex;
+}
+.A2{
+
+    height: 320px;
+    display: flex;
+    border: 1px solid black;
+}
+.A3{
+
+    height: 300px;
+    display: flex;
+    border: 1px solid black;
+}
+.A4{
+
+    height: 80px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+
+.d1{
+    border: 1px solid black;
+
+
+}
+.d2{
+    border: 1px solid black;
+
+
+}
+
+.e1{
+    border: 1px solid black;
+
+
+}
+
+.e2{
+    border: 1px solid black;
+
+
+}
+
+.f{
+    width: 100%;
+    height: 80px;
+
+
+
+}
+
+.g{
+    width: 100%;
+    border: 1px solid black;
+}
+.table p {
+    margin-top: 0;
+    margin-bottom: 7px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.table-bordered {
+    border: 1px solid #adadad;
+}
+section{
+    padding: 18px;
+    border: 1px solid #adadad;
+}
+img{
+    /* height: 190px; */
+    width: 200px;
+
+}
+
+
+
+
+
+.h{
+
+    display: flex;
+    justify-content: flex-end;
+
+
+
+}
+
+.i{
+
+    height: 300px;
+    border: 1px solid black;
+    border-left: none;
+
+
+
+}
+
+.j{
+    height:300px;
+
+
+
+    border: 1px solid black;
+}
+
+.k{
+
+    height: 300px;
+    border: 1px solid black;
+    border-right: none;
+
+
+}
+
+.table1{
+
+    padding-left: 0%;
+
+
+}
+
+.sign{
+
+    border: 1px solid black;
+}
+ .h1{
+    display: flex;
+    justify-content: space-around;
+
+
+ }
+
+  </style>
+</head>
+
+<body>
+
+<main layout:fragment="blank_content">
+  <section>
+    <div class="main-box">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 text-center"> <img th:src="@{/img/mayuri.png}" alt=""></div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-md-12" th:style="@{margin-top: 23px;}">
+            <table class="table table-bordered" >
+                <thead>
+                  <tr>
+                        <th scope="col">Transaction Id</th>
+                        <th scope="col">Transaction Type</th>
+                        <th scope="col">Transaction For</th>
+                        <th scope="col">Date Of Transaction</th>
+                        <th scope="col">Total Amount</th>
+                              </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="region : ${miscList}">
+                        <td th:text="${region.id}" scope="row"></td>
+                        <td th:text="${region.money_type}"></td>
+                        <td th:text="${region.expenseTypeList}"></td>
+                        <td th:text="${region.date}"></td>
+                        <td th:text="${region.amount}"></td>
+                        
+             <!--        <td><a th:href="@{/app/groups/edit/{id}(id=${groups.groupId})}"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 21px;color: green;"></i></a>
+                     <a th:href="@{/app/groups/delete/{groupId}(groupId=${groups.groupId})}"><i class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i></a></td>
+                 -->
+                  </tr>
+                  
+                 
+                </tbody>
+              </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main><!-- End #main -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<!--<script th:src="@{/vendor/apexcharts/apexcharts.min.js}"></script>-->
+<!--<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+<!--<script th:src="@{/vendor/chart.js/chart.umd.js}"></script>-->
+<!--<script th:src="@{/vendor/echarts/echarts.min.js}"></script>-->
+<!--<script th:src="@{/vendor/quill/quill.min.js}"></script>-->
+<!--<script th:src="@{/vendor/simple-datatables/simple-datatables.js}"></script>-->
+<!--<script th:src="@{/vendor/tinymce/tinymce.min.js}"></script>-->
+<!--<script th:src="@{/vendor/php-email-form/validate.js}"></script>-->
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Template Main JS File -->
+<script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>

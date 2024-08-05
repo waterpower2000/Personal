@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	  layout:decorate="~{layouts/home_layout.html}">
+
+<head>
+  
+  <title>Region Management</title>
+ 
+  
+</head>
+
+<body>
+
+  <main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+      <h1>Region Management</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+      </ol>
+    </div><!-- End Page Title -->
+    <section>
+		<form action="#" th:action="@{/api/region/save}" method="post" th:object="${createRegion}">
+        <div class="container">
+          <div class="card py-4 px-4">
+			  <div th:if="${session.message}" class="container">
+                <div class="alert alert-success text-center" role="alert">
+                    <span th:text="${session.message.content}"></span>
+                </div>
+
+                <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+            </div>
+            <div class="row">
+				
+                <div class="col-md-12">
+                    <input type="text" class="form-control" placeholder="Region Name" th:field="*{regionName}" name="regionName" required="required">
+                </div>
+                <br>
+                <div class="col-md-12 mt-3">
+                  <input class="form-control" type="text" placeholder="Region Details" id="floatingTextarea" style="height: 200px;" th:field="*{regionDetails}" name="regionDetails" required="required"></input>
+                </div>
+            </div>
+
+            <div class="mt-4" style="text-align: center;">
+				
+				<button class="btn btn-primary btn-user btn-block" type="submit">Add Region </button> 
+				
+			</div>
+          </div>
+        </div>
+		</form>
+		
+		<div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Region Table</h5>            
+              
+              
+              <!-- Table with stripped rows -->
+              	
+    				
+              
+              <table class="table" >
+                <thead>
+                  <tr>
+                    <th scope="col">Region Code</th>
+                    <th scope="col">Region Name</th>
+                    <th scope="col">Region Details</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="region : ${allRegion}">
+                        <td th:text="${region.id}" scope="row"></td>
+                        <td th:text="${region.regionName}"></td>
+                        <td th:text="${region.regionDetails}"></td>
+                        <td th:style="${region.regionName} == 'ALL' ? 'display: none' : ''"><a th:href="@{/api/region/edit/{id}(id=${region.id})}"><i class="bi bi-pencil-square"></i></a>
+                        <a th:href="@{/api/region/delete/{id}(id=${region.id})}"><i class="bi bi-trash-fill"></i></a>
+                        
+                        </td>
+             <!--        <td><a th:href="@{/app/groups/edit/{id}(id=${groups.groupId})}"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 21px;color: green;"></i></a>
+                     <a th:href="@{/app/groups/delete/{groupId}(groupId=${groups.groupId})}"><i class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i></a></td>
+                 -->
+                  </tr>
+                  
+                 
+                </tbody>
+              </table>
+              
+              <!-- End Table with stripped rows 
+              <div class="datatable-bottom">
+    					<div class="datatable-info">Showing 1 to 8 of 8 entries</div>
+    						<nav class="datatable-pagination"><ul class="datatable-pagination-list"></ul></nav>
+					</div>
+					</div>
+				-->
+            
+          </div>
+        </div>
+      </div>
+       </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  
+</body>
+
+</html>

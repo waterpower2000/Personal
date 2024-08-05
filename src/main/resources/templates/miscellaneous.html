@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home_layout.html}">
+<head>
+    <title>Miscellaneous</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <style>
+        img{
+            text-align: right;
+            align-items: right;
+        }
+        .right{
+            text-align: right;
+        }
+    </style>
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{https://getbootstrap.com/docs/5.3/assets/css/docs.css}" rel="stylesheet">
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js}"></script>
+</head>
+<!-- =======================================================
+* Template Name: NiceAdmin
+* Updated: May 30 2023 with Bootstrap v5.3.0
+* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+======================================================== -->
+
+
+<body>
+
+<!-- ======= Header ======= -->
+
+<!-- ======= Sidebar ======= -->
+
+<main id="main" class="main" layout:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pagetitle">
+                    <h1>Miscellaneous</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+                    </ol>
+                </div><!-- End Page Title -->
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add New Transaction
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Transaction</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="#" id="miscellaneous_heads" th:action="@{/api/miscellaneousHeads/save}"
+                                      method="post"
+                                      th:object="${createMiscellaneousHeads}">
+                                    <div class="mb-3">
+                                        <label for="transaction_name" class="col-form-label">Transaction Name:</label>
+                                        <input type="text" id="transaction_name" class="form-control"
+                                               th:field="*{transaction_name}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="col-form-label">Account Type</label>
+                                        <select id="account_type" class="form-select form-select-lg"
+                                                th:style="@{font-size:15px}" th:field="*{account_type}"
+                                                required="required">
+                                            <option value="null" class="form-control" required>select an Account
+                                            </option>
+                                            <option value="TRADING" class="form-control" required>Trading Account
+                                            </option>
+                                            <option value="PROFIT_LOSS" class="form-control" required>Profit Loss
+                                                Account
+                                            </option>
+                                            <option value="BALANCE_SHEET" class="form-control" required>Balance Sheet
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                                <br>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:if="${session.message}" class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+    <form action="#" id="misc_form" th:action="@{/api/miscellaneous/save}" method="post"
+          th:object="${createMiscellaneousDto}">
+        <div class="container">
+            <div class="card py-4 px-4">
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <select id="groupName" class="form-select form-select-lg" th:style="@{font-size:15px}"
+                                th:field="*{money_type}" required="required">
+                            <option value="null">Choose Option</option>
+                            <option value="CREDIT">Income</option>
+                            <option value="DEBIT">Expense</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="groupNameOne" class="form-select form-select-lg" th:style="@{font-size:15px}"
+                                th:field="*{expense_type}" required onchange="createInputField(this);">
+                            <option value="null">Type of Transaction</option>
+                            <option th:each="head : ${headslist}" value="${head.transaction_name}"
+                                    th:text="${head.transaction_name}" th:attr="data-id=${head.id}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input id="date" type="text" class="form-control" th:field="*{date}"
+                               placeholder="Date of Transaction" onfocus="(this.type='date')"
+                               onblur="(this.type='text')" required>
+                    </div>
+                </div>
+                <div class="row mt-3" id="abc">
+                    <div class="col-md-6">
+                        <input id="amount" type="text" class="form-control" placeholder="Amount" th:field="*{amount}"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input id="variantName" type="text" class="form-control" placeholder="Specification for Others"
+                               th:field="*{others_specification}" maxlength="50">
+                    </div>
+                </div>
+                <script>
+                    function createInputField(selectElement) {
+                        // Get the selected option
+                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                        // Get the data-id attribute value (head.id)
+                        var headId = selectedOption.getAttribute('data-id');
+
+                        // Remove any previously created input field
+                        var existingInput = document.getElementById('headIdInput');
+                        if (existingInput) {
+                            existingInput.parentNode.removeChild(existingInput);
+                        }
+
+                        // Create a new input element
+                        var inputElement = document.createElement('input');
+                        inputElement.type = 'text';
+                        inputElement.className = 'form-control';
+                        inputElement.value = headId; // Set the value to head.id
+                        inputElement.id = 'headIdInput'; // Set a unique ID for the input field
+                        inputElement.name = 'miscellanous_heads_id'; // Set the name attribute for th:field
+                        // Append the input field to the specified div
+                        inputElement.style.display = "none";
+                        document.getElementById('abc').appendChild(inputElement);
+                    }
+                </script>
+
+                <div class="row mt-3">
+
+                </div>
+
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary btn-user btn-block" type="submit">ADD</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Miscellaneous Table</h5>
+                    <div class="right">
+                        <a th:href="@{/api/miscellaneous/bulk/miscellaneous}"><img th:src="@{/img/excel.png}" alt=""
+                                                                                   style="height:40px;"></a>
+                        <a th:href="@{/api/miscellaneous/generate/pdf}"><img th:src="@{/img/pdf (1).png}" alt=""
+                                                                             style="height:40px;"></a>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <div class="table-responsive">
+                        <table class="table datatable table-bordered border-top border-bottom">
+                            <thead>
+                            <tr>
+                                <th scope="col">Transaction Id</th>
+                                <th scope="col">Transaction Type</th>
+                                <th scope="col">Transaction For</th>
+                                <th scope="col">Date Of Transaction</th>
+                                <th scope="col">Specification</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="region : ${miscList}">
+                                <td th:text="${region.id}" scope="row"></td>
+                                <td th:text="${region.money_type}"></td>
+                                <td th:text="${region.expenseTypeList}"></td>
+                                <td th:text="${region.date}"></td>
+                                <td th:text="${region.specification}"></td>
+                                <td th:text="${region.amount}"></td>
+                                <td><a th:href="@{/api/miscellaneous/delete/{id}(id=${region.id})}"><i
+                                        class="bi bi-trash-fill"></i></a></td>
+                                <!--        <td><a th:href="@{/app/groups/edit/{id}(id=${groups.groupId})}"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 21px;color: green;"></i></a>
+                                        <a th:href="@{/app/groups/delete/{groupId}(groupId=${groups.groupId})}"><i class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i></a></td>
+                                    -->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End Table with stripped rows
+                    <div class="datatable-bottom">
+                              <div class="datatable-info">Showing 1 to 8 of 8 entries</div>
+                                  <nav class="datatable-pagination"><ul class="datatable-pagination-list"></ul></nav>
+                          </div>
+                          </div>
+                      -->
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+</main><!-- End #main -->
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Include jQuery Validation Plugin -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+      // Initialize form validation on the form
+      $("#misc_form").validate({
+        rules: {
+          money_type: {
+            required: true,
+          },
+          expense_type: {
+            required: true,
+          },
+          date: {
+            required: true,
+            date: true, // You can customize this further based on your date format
+          },
+          amount: {
+            required: true,
+            number: true, // Allow only numeric values
+          },
+          variantName: {
+            required: function (element) {
+              // Make variantName required if expense_type is 'Others'
+              return $("#groupNameOne").val() === 'Others';
+            },
+            maxlength: 50,
+          },
+        },
+        messages: {
+          money_type: {
+            required: "Please choose an option",
+          },
+          expense_type: {
+            required: "Please choose an option",
+          },
+          date: {
+            required: "Please enter a date",
+            date: "Please enter a valid date (dd-mm-yyyy)",
+          },
+          amount: {
+            required: "Please enter the amount",
+            number: "Please enter a valid number",
+          },
+          variantName: {
+            required: "Specification is required when 'Others' is selected",
+            maxlength: "Maximum 50 characters allowed",
+          },
+        },
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+          // Customize the placement of error messages if needed
+          error.addClass("help-block");
+          error.insertAfter(element);
+        },
+        highlight: function (element, errorClass, validClass) {
+          $(element).parents(".form-group").addClass("has-error").removeClass("has-success");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $(element).parents(".form-group").addClass("has-success").removeClass("has-error");
+        },
+        submitHandler: function (form) {
+          // Form is valid, proceed with form submission
+          form.submit();
+        },
+      });
+
+      // Prevent form submission on button click
+      $("#misc_form").on("submit", function (event) {
+        event.preventDefault();
+      });
+    });
+</script>
+
+
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

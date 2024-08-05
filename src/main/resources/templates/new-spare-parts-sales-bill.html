@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/blank_layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css}">
+  <title></title>
+  <style>
+    /* *{
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+
+} */
+
+body{
+    border: 1px solid #adadad;
+    padding:20px;
+}
+.outer{
+    border: 1px solid black;
+    height: 1800px;
+    width: 100%;
+
+}
+i{
+    padding-left: 10px;
+}
+.inner1{
+    height: 900px;
+    width: 100%;
+    border: 1px solid black;
+}
+.inner2{
+    height: 600px;
+    width: 100%;
+    border: 1px solid black;
+}
+.inner3{
+    height: 300px;
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+}
+
+
+.A1{
+    height: 200px;
+    display: flex;
+}
+.A2{
+
+    height: 320px;
+    display: flex;
+    border: 1px solid black;
+}
+.A3{
+
+    height: 300px;
+    display: flex;
+    border: 1px solid black;
+}
+.A4{
+
+    height: 80px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+
+.d1{
+    border: 1px solid black;
+
+
+}
+.d2{
+    border: 1px solid black;
+
+
+}
+
+.e1{
+    border: 1px solid black;
+
+
+}
+
+.e2{
+    border: 1px solid black;
+
+
+}
+
+.f{
+    width: 100%;
+    height: 80px;
+
+
+
+}
+
+.g{
+    width: 100%;
+    border: 1px solid black;
+}
+.table p {
+    margin-top: 0;
+    margin-bottom: 7px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.table-bordered {
+    border: 1px solid #adadad;
+}
+section{
+    padding: 18px;
+    border: 1px solid #adadad;
+}
+img{
+    /* height: 190px; */
+    width: 200px;
+
+}
+
+
+
+
+
+.h{
+
+    display: flex;
+    justify-content: flex-end;
+
+
+
+}
+
+.i{
+
+    height: 300px;
+    border: 1px solid black;
+    border-left: none;
+
+
+
+}
+
+.j{
+    height:300px;
+
+
+
+    border: 1px solid black;
+}
+
+.k{
+
+    height: 300px;
+    border: 1px solid black;
+    border-right: none;
+
+
+}
+
+.table1{
+
+    padding-left: 0%;
+
+
+}
+
+.sign{
+
+    border: 1px solid black;
+}
+ .h1{
+    display: flex;
+    justify-content: space-around;
+
+
+ }
+
+  </style>
+</head>
+
+<body>
+
+<main layout:fragment="blank_content">
+  <section>
+    <div class="main-box">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 text-center"> <img th:src="@{/img/mayuri.png}" alt=""></div>
+          <div class="col-md-6 text-center">
+            <h5><u>TAX INVOICE</u></h5>
+            <h3><b>RAWAL & CO</b></h3>
+            <h6>DAHARPUR, TAMLUK , TAMLUK - 721636</h6>
+            <h6>Mobile - 7797827031  , State Code - 19</h6>
+            <h6><strong>GSTIN : 19AGRPRO146F1Z5</strong></h6>
+            <h6><i>email: rawalcotamluk@gmail.com</i></h6>
+          </div>
+          <div class="col-md-3">
+            <h6><i>duplicate copy</i></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-bordered" th:style="@{margin-top: 24px;}">
+              <tbody>
+              <tr>
+                <td>
+                  <p th:style="@{color: #0808ba;}"><b th:text="'Invoice No.  :'+'  '+${purchase.invoiceNumber}"></b></p>
+                  <p th:text="'Dated. :'+ '  '+${purchase.purchaseDate}"></p>
+                  <p>Place of supply  :   West Bengal(19) </p>
+                  <p>Reverse Charge  :   GST/23-24/1729</p>
+                  <p>GR/RR No. :</p>
+                </td>
+                <td>
+                  <p th:style="@{color: #0808ba;}"><b th:text="'Invoice No.  :'+'  '+${purchase.invoiceNumber}"></b></p>
+                  <p th:text="'Dated. :'+ '  '+${purchase.purchaseDate}"></p>
+                  <p>Place of supply  :   West Bengal(19) </p>
+                  <p>Reverse Charge  :   GST/23-24/1729</p>
+                  <p>GR/RR No. :</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b><i>Billed to:</i></b>
+                  <p th:text="${purchase.customer_name}"></p>
+                  <p th:text="${purchase.customer_Address}"></p>
+                  <p th:text="'Party PAN   : ' + ${purchase.panCardNo}"></p>
+                  <p th:text="'GSTIN/UIN  : ' + ${purchase.gstNo}"></p>
+                </td>
+                <td>
+                  <b><i>Shipped to:</i></b>
+                  <p th:text="${purchase.customer_name}"></p>
+                  <p th:text="${purchase.customer_Address}"></p>
+                  <p th:text="'Party PAN   : ' + ${purchase.panCardNo}"></p>
+                  <p th:text="'GSTIN/UIN  : ' + ${purchase.gstNo}"></p>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-12" th:style="@{margin-top: 23px;}">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th scope="col">SN</th>
+                <th scope="col">Description of goods</th>
+                <th scope="col">Date</th>
+                <th scope="col">Colour</th>
+                <th scope="col">QTY</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <th:block th:text="${purchase.purchaseType} + '(' + ${purchase.sparePartsName}"></th:block>
+                  <br />
+                  <i>
+                    <th:block th:text="'Model No.:-'+${purchase.model_number}+')'"></th:block>
+                  </i>
+
+                  <br />
+                </td>
+                <td th:text="${purchase.purchaseDate}"></td>
+                <td th:text="${purchase.variantColour}"></td>
+                <td>1.00</td>
+                <td>NOs.</td>
+                <td th:text="${purchase.totalPrice}"></td>
+                <td th:text="${purchase.totalPrice}"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main><!-- End #main -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<!--<script th:src="@{/vendor/apexcharts/apexcharts.min.js}"></script>-->
+<!--<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+<!--<script th:src="@{/vendor/chart.js/chart.umd.js}"></script>-->
+<!--<script th:src="@{/vendor/echarts/echarts.min.js}"></script>-->
+<!--<script th:src="@{/vendor/quill/quill.min.js}"></script>-->
+<!--<script th:src="@{/vendor/simple-datatables/simple-datatables.js}"></script>-->
+<!--<script th:src="@{/vendor/tinymce/tinymce.min.js}"></script>-->
+<!--<script th:src="@{/vendor/php-email-form/validate.js}"></script>-->
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Template Main JS File -->
+<script th:src="@{assets/js/main.js}"></script>
+
+</body>
+
+</html>

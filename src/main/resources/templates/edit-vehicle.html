@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home_layout.html}">
+
+<head>
+
+    <title>Edit Vehicle</title>
+
+</head>
+
+<body>
+
+
+<main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+        <h1>Add Vehicle</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Region 1</a></li>
+        </ol>
+    </div><!-- End Page Title -->
+    <div th:if="${session.message}" class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+    <form action="#" th:action="@{/api/update/{id}(id=${vehicle.vehicleId})}" method="post" th:object="${createVehicle}">
+        <div class="container">
+            <div class="card py-4 px-4">
+                <div class="row mt-3">
+
+                    <div class="col-md-4">
+                        <input id="name" type="text" class="form-control" placeholder="Name" required th:field="*{name}" th:value="${vehicle.name}">
+                    </div>
+                </div>
+                <div class="row mt-3">
+
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Company Name" required th:field="*{companyName}" th:value="${vehicle.companyName}">
+                    </div>
+                    <div class="col-md-6">
+                        <select id="selectThree"class="form-select" data-live-search="true" aria-label="Default select example" th:field="*{vehicleType}"  th:value="${vehicle.type}">
+                            <option value="E_AUTO">E_AUTO</option>
+                            <option value="E_RICKSHAW">E_RICKSHAW</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary btn-user btn-block" type="submit">Edit</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</main><!-- End #main -->
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script th:src="@{/js/main.js}"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<script type="application/javascript">
+    $(".addUserModalClose").on("click", function () {
+        $("#addUserModal").modal('hide');
+    });
+</script>
+<div class="modal-header">
+    <h5 class="modal-title" id="addUserModalTitle" th:text="${USERCODE + ' : Assign / Revoke Role'}"></h5>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <span class="col-form-label text-lg-left">Assigned Roles</span>
+        </div>
+        <div class="col-sm-12">
+            <div class="table-full-width">
+                <table class="table">
+                    <tbody>
+                    <tr th:each="role: ${ASSIGNEDROLE}">
+                        <td class="text-left" th:text="${role.roleCode}"></td>
+                        <td class="text-left" th:text="${role.roleName}"></td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="Revoke"
+                                    class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
+                                    data-original-title="Remove"
+                                    th:rolecode="${role.roleCode}"
+                                    th:usercode="${USERCODE}"
+                                    onclick="revokeRole(this)"
+                            >
+                                <i class="nc-icon nc-simple-remove"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-12">
+            <span class="col-form-label text-lg-left">Unassigned Roles</span>
+        </div>
+        <div class="col-sm-12">
+            <div class="table-full-width">
+                <table class="table">
+                    <tbody>
+                    <tr th:each="role: ${UNASSIGNEDROLE}">
+                        <td class="text-left" th:text="${role.roleCode}"></td>
+                        <td class="text-left" th:text="${role.roleName}"></td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="Grant"
+                                    class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral grantPermission"
+                                    data-original-title="Grant"
+                                    th:rolecode="${role.roleCode}"
+                                    th:usercode="${USERCODE}"
+                                    onclick="assignRole(this)"
+                            >
+                                <i class="nc-icon nc-simple-add"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary assignPermissionToRoleModalClose" data-dismiss="modal">Close</button>
+</div>
+</body>
+</html>

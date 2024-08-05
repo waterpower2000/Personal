@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/home_layout.html}">
+
+<head>
+
+    <title>Add Vehicle</title>
+
+</head>
+
+<body>
+
+
+<main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+        <h1>Add Vehicle</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+        </ol>
+    </div><!-- End Page Title -->
+    <div th:if="${session.message}" class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+    <form action="#" th:action="@{/api/vehicle/create/vehicle}" method="post" th:object="${createVehicle}">
+        <div class="container">
+            <div class="card py-4 px-4">
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <select id="groupNameOne" class="form-select form-select-lg" th:style="@{font-size:15px}"  th:field="*{type}" onchange="getType(this.value)">
+                            <option value="VEHICLE"> VEHICLE</option>
+                            <option value="SPARE_PARTS">SPARE_PARTS</option>
+                        </select>
+                    </div>
+                    <script layout:fragment="normalScript" type="application/javascript">
+                        function getType(detail){
+        <!--                   $.ajax({-->
+        <!--                      url: '/api/purchase/get/type?details='+detail,-->
+        <!--                      type: 'get',-->
+        <!--                      success: function(data){-->
+        <!--                      $('#JobDiv_id').find('option').remove();-->
+        <!--                      $.each(data, function(index, values) {-->
+        <!--                      $('#JobDiv_id').append('<option value="' + values + '">' + values + '</option>');-->
+        <!--                      });-->
+        <!--                      },-->
+        <!--                      error: function(error) {-->
+        <!--                         alert(error.StatusText)-->
+        <!--                      }-->
+        <!--                   });-->
+
+                          console.log(detail)
+                          if(detail === 'SPARE_PARTS'){
+                             document.getElementById("groupName").disabled = true;
+                             document.getElementById("selectThree").disabled = true;
+                             document.getElementById("variantName").disabled = true;
+                             document.getElementById("colour").disabled = true;
+                             document.getElementById("price").disabled = true;
+                             document.getElementById("feature").disabled = true;
+                          }
+                          else{
+                             document.getElementById('groupName').disabled = false;
+                             document.getElementById("selectThree").disabled = false;
+                             document.getElementById("variantName").disabled = false;
+                             document.getElementById("colour").disabled = false;
+                             document.getElementById("price").disabled = false;
+                             document.getElementById("feature").disabled = false;
+                          }
+                       }
+                    </script>
+
+
+                    <div class="col-md-6">
+                        <select id="groupName" class="form-select form-select-lg" th:style="@{font-size:15px;display:none;}" th:field="*{vehicleId}" >
+                            <option value="null">Choose Option</option>
+                            <option th:style="@{font-size:15px}" th:each="vehicle : ${vehicles}" th:value="${vehicle.vehicleId}" th:text="${vehicle.name}"></option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="row mt-3">
+
+                    <div class="col-md-6">
+                        <input id="variantName" type="text" class="form-control" placeholder="Variant Name" th:field="*{variantName}" required="required">
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <select id="selectThree"class="form-select" data-live-search="true" aria-label="Default select example" th:field="*{vehicleType}">
+                            <option value="E_AUTO">E_AUTO</option>
+                            <option value="E_RICKSHAW">E_RICKSHAW</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Company Name" th:field="*{companyName}" required="required">
+                    </div>
+                    <div class="col-md-6">
+                        <input id="colour" type="text" class="form-control" placeholder="Colour" th:field="*{Color}" required="required">
+                    </div>
+                    <br><br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input id="feature" type="text" class="form-control" placeholder="Features" th:field="*{features}" maxlength="240">
+                    </div>
+
+                </div>
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary btn-user btn-block" type="submit">ADD</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</main><!-- End #main -->
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script th:src="@{/js/main.js}"></script>
+
+
+</body>
+
+</html>
