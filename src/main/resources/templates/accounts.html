@@ -1,0 +1,170 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	  layout:decorate="~{layouts/home_layout.html}">
+	  
+<head>
+  <title>Account</title>
+</head>
+
+<body>
+
+  
+  <main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+      <h1>Accounts</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+      </ol>
+    </div><!-- End Page Title -->
+    <section>
+        <div class="">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" style="overflow: auto;">
+                          <h4 class="card-title2">Income Ledger</h4>
+            
+                          <!-- Default Table -->
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Sales Order Id</th>
+                                <th scope="col">Item Type</th>
+                                <th scope="col">Item Details</th>
+                                <th scope="col">Date Of Sales</th>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Price per Quantity</th>
+                                <th scope="col">Total Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+								<tr th:each="sales : ${allSales}">
+                                <td th:text="${sales.id}"></td>
+                                    <td th:text="${sales.purchaseType}"></td>
+                                    <td th:text="${sales.variantName} ? ${sales.variantName} : ${sales.sparePartsName}" ></td>
+                                <td th:text="${sales.purchaseDate}"></td>
+                                <td th:text="${sales.customer_name}"></td>
+                                <td th:text="${sales.perQuantityPrice}"></td>
+                                <td th:text="${sales.totalPrice}"></td>
+                                    <td> <a th:href="@{/api/sales/generate/pdf/sales/{id}(id=${sales.id})}" class="btn btn-primary">View Reciept</a></td>
+								</tr>	
+                            </tbody>
+                           
+                          </table>
+                          <!-- End Default Table Example -->
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" style="overflow: auto;">
+                          <h4 class="card-title2">Expense Ledger</h4>
+            
+                          <!-- Default Table -->
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Purchase Order Id</th>
+                                <th scope="col">Item Type</th>
+                                <th scope="col">Item Details</th>
+                                <th scope="col">Date Of Purchase</th>
+                                <th scope="col">Supplier Name</th>
+                                <th scope="col">Price per Quantity</th>
+                                <th scope="col">Total Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:each="purchase : ${allPurchase}">
+                                <td th:text="${purchase.id}"></td>
+                                <td th:text="${purchase.purchaseType}"></td>
+                                <td th:text="${purchase.variantName} ? ${purchase.variantName} : ${purchase.sparePartsName}" ></td>
+                                <td th:text="${purchase.purchaseDate}"></td>
+                                <td th:text="${purchase.supplierName}"></td>
+                                <td th:text="${purchase.perQuantityPrice}"></td>
+                                <td th:text="${purchase.totalPrice}"></td>
+                                  <td> <a th:href="@{/api/sales/generate/pdf/{id}(id=${purchase.id})}" class="btn btn-primary">View Reciept</a></td>
+                              </tr>
+                            </tbody>
+
+                          </table>
+                          <!-- End Default Table Example -->
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body" style="overflow: auto;">
+                          <h4 class="card-title2">Main Ledger</h4>
+            
+                          <!-- Default Table -->
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Transaction Id</th>
+                                <th scope="col">Transaction Type</th>
+                                <th scope="col">Date Of Transaction</th>
+                                <th scope="col">Total Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:each="mainLedger : ${allMainLedger}">
+                                <td th:text="${mainLedger.id}"></td>
+                                <td th:text="${mainLedger.type}"></td>
+                                <td th:text="${mainLedger.date}"></td>
+                                <td th:text="${mainLedger.totalAmount}"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <!-- End Default Table Example -->
+                        </div>
+                      </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body" style="overflow: auto;">
+                          <h4 class="card-title2">Miscellaneous Ledger</h4>
+            
+                          <!-- Default Table -->
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Transaction Id</th>
+                                <th scope="col">Transaction Type</th>
+                                <th scope="col">Date Of Transaction</th>
+                                <th scope="col">Total Amount</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:each="m : ${misc}">
+                                <td th:text="${m.id}"></td>
+                                <td th:text="${m.money_type}"></td>
+                                <td th:text="${m.date}"></td>
+                                <td th:text="${m.amount}"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <!-- End Default Table Example -->
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+       </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  
+</body>
+
+</html>

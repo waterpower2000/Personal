@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/blank_layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <title></title>
+</head>
+
+<body>
+
+<main layout:fragment="blank_content">
+  <div id="container">
+
+    <div class="outer">
+      <div class="inner1 container ">
+        <div class="row align-items-start A1 text-center">
+          <div class="col-md-3 logo">
+            <img th:src="@{/img/mayuri.png}" alt="">
+          </div>
+
+          <div class="col-md-6">
+            <h5><u>TAX INVOICE</u></h5></h3>
+            <h3><b>SAERA ELECTRIC AUTO LIMITED</b></h3>
+            <h6>A-145B,RIICO INDUSTRIAL AREA,BHIWADI, ALWAR. RAJASTHAN 301019</h6>
+            <h6>CIN : U50300RJ2011PTC059721</h6>
+            <h6><strong>GSTIN : 08AAQCS1957D1Z2</strong></h6>
+            <h6><i>email: purchase.bhiwadi@saeraindia.com</i></h6>
+          </div>
+
+
+
+
+
+        </div>
+
+        <div class="A2">
+          <div class="d1 col-sm">
+            <table>
+              <tbody>
+              <tr>
+                <th scope="row"></th>
+                <td th:text="'Invoice No.  :'+'   '+${purchase.invoiceNumber}"></td>
+
+
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td th:text="'Dated.  :'+ '   '+${purchase.purchaseDate}"></td>
+
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td>Place of supply  :   West Bengal(19) </td>
+
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td>Reverse Charge  :   GST/23-24/1729</td>
+
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td>GR/RR No.   :</td>
+
+              </tr>
+
+
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="d2 col-sm">
+            <table>
+              <tbody>
+              <tr>
+                <th scope="row"></th>
+
+                <td>Transport  : Yogiraj Logistics</td>
+
+              </tr>
+
+              </tr>
+              <th scope="row"></th>
+
+              <td><tr>
+              <th scope="row"></th>
+
+              <td>Vehicle No.  : HR74B5469   </td>
+
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td>Station  :   Purba Medinipur </td>
+
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td>E-Way Bill No.  :   741365382977 </td>
+
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td>Tariff Heading  :   Policy-1417012122P1011916314. </td>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="A3">
+          <div class="e1 col-sm">
+            <table>
+              <tbody>
+              <thead class="table1"><b><i>Billed to:</i></b></thead>
+              <tr>
+                <th scope="row"></th>
+
+                <td th:text="${purchase.supplierName}"></td>
+              </tr>
+              <tr>
+                <th scope="row"></th>
+
+                <td th:text="${purchase.supplierAddress}"></td>
+              </tr>
+              <tr>
+
+                <th scope="row"></th>
+
+                <td th:text="'Party PAN   : ' + ${purchase.panCardNo} "></td>
+
+              </tr>
+
+              <tr>
+
+                <th scope="row"></th>
+                <td th:text="'GSTIN/UIN  : ' + ${purchase.gstNo} "></td>
+
+
+              </tr>
+              </tbody>
+            </table>
+
+
+          </div>
+
+          <div class="e2 col-sm">
+            <table>
+              <tbody>
+              <thead class="table1"><b><i>Shipped to:</i></b></thead>
+              <tr>
+                <th scope="row"></th>
+
+                <td th:text="${purchase.supplierName}"></td>
+              </tr>
+
+              <tr>
+                <th scope="row"></th>
+
+                <td th:text="${purchase.supplierAddress}"></td>
+              </tr>
+              <tr>
+
+                <th scope="row"></th>
+
+                <td th:text="'Party PAN   : ' + ${purchase.panCardNo} "></td>
+
+              </tr>
+
+              <tr>
+
+                <th scope="row"></th>
+
+                <td th:text="'GSTIN/UIN  : ' + ${purchase.gstNo} "></td>
+
+              </tr>
+              </tbody>
+            </table>
+
+
+          </div>
+
+        </div>
+
+
+      <div class="inner2 container text-center">
+        <div class="f">
+
+
+
+        </div>
+
+        <div class="g">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">SN</th>
+              <th scope="col">Description of goods</th>
+              <th scope="col">date</th>
+              <th scope="col">Colour</th>
+              <th scope="col">QTY</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Price</th>
+              <th scope="col">Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>
+                <th:block th:text="${purchase.vehicleType} + '(' + ${purchase.variantName}"></th:block>
+                <br />
+                <i>
+                  <th:block th:text="'Chassis No.:-'+${purchase.chassis_number}"></th:block>
+                </i>
+                <br />
+                <i>
+                  <th:block th:text="'Motor No.:-'+${purchase.model_number}"></th:block>
+                </i>
+                <br />
+                <i>
+                  <th:block th:text="'Controller No.:-'+${purchase.engine_number}"></th:block>
+                </i>
+                <br />
+                <i>
+                  <th:block th:text="'Motor S No.:-'+${purchase.engine_number}"></th:block>
+                </i>
+                <br />
+                <i>
+                  <th:block th:text="'Controller S No.:-'+${purchase.engine_number} + ')'"></th:block>
+                </i>
+                <br />
+              </td>
+<!--              <td>E-RICKSHAW(MAYURI PRO GRAND 95<br><i>Chassis No.:-M38SEAPB23H056186</i><br><i>Motor No.:-SAERA000122166</i><br><i>Controller No.:-SAERA000153231</i><br><i>Motor S No.:-23050396</i><br><i>Controller S No.:-23083353</i>)</td>-->
+              <td th:text="${purchase.totalPrice}"></td>
+              <td th:text="${purchase.purchaseDate}"></td>
+              <td>1.00</td>
+              <td>NOs.</td>
+              <td th:text="${purchase.totalPrice}"></td>
+              <td th:text="${purchase.totalPrice}"></td>
+            </tr>
+
+            </tbody>
+          </table>
+
+
+
+        </div>
+
+      </div>
+
+      <div class="inner3 container">
+        <div class="col-sm-3 i">
+          <h6><u>Terms and conditions</u></h6>
+          <p>E & OE</p><br>
+          <p>1.Good ones sold will not be taken back.</p>
+          <p>2.Interest @18% p.a. will be charged if the payment is not made with in the stipulated time.</p>
+          <p>3.Subject to 'Alwar' jurisdiction only</p>
+
+        </div>
+        <div class="col-sm-3 text-center j">
+          <h6>E-Invoice QR code</h6>
+          <img th:src="@{/img/qr-code.jpeg}" alt="">
+
+
+        </div>
+
+        <div class="col-sm-6 text-center k">
+          <div>
+            <h6>Reciever's Signature :</h6>
+          </div>
+          <div class="sign">
+
+          </div>
+
+        </div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </div>
+</main><!-- End #main -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script th:src="@{/vendor/apexcharts/apexcharts.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/vendor/chart.js/chart.umd.js}"></script>
+<script th:src="@{/vendor/echarts/echarts.min.js}"></script>
+<script th:src="@{/vendor/quill/quill.min.js}"></script>
+<script th:src="@{/vendor/simple-datatables/simple-datatables.js}"></script>
+<script th:src="@{/vendor/tinymce/tinymce.min.js}"></script>
+<script th:src="@{/vendor/php-email-form/validate.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

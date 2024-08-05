@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	  layout:decorate="~{layouts/home_layout.html}">
+<head>
+  <title>Miscellaneous</title>
+  <style>
+	  label {
+   font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    color: #828282;
+    text-align: left!important;
+    margin-bottom: 8px;
+}
+  </style>
+</head>
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: May 30 2023 with Bootstrap v5.3.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+
+<body>
+
+  <!-- ======= Header ======= -->
+  
+  <!-- ======= Sidebar ======= -->
+  
+  <main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+      <h1>Stock Transfer</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+      </ol>
+    </div><!-- End Page Title -->
+
+   <div th:if="${session.message}" class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+  <form id="msform" method="post" th:action="@{/api/stock/save}" th:object="${createStockDto}">
+	  
+	  
+	  <script layout:fragment="normalScript" type="application/javascript">
+
+                      
+
+                       function getType(details){
+                       
+                         if(details === 'Spare_Parts'){
+
+
+                            $.ajax({
+                                url: '/api/sales/get/spare/parts/variants',
+                                type: 'get',
+                                success: function(data){
+<!--                                  $('#JobDiv_id').find('option').remove();-->
+                                   $('#JobDiv_id').empty(); // Clear existing options
+                                  $.each(data, function(index, values) {
+                                    $('#JobDiv_id').append(' <option value="none" selected disabled hidden>Select an Option</option> '+'<option value="' + values.id + '">' + values.sparePartsName + '</option>');
+                                  });
+                                },
+                                error: function(error) {
+                                  alert(error.StatusText)
+                                }
+                            });
+
+                         }
+                         else{
+
+                             $.ajax({
+                                url: '/api/sales/get/vehicle/variants',
+                                type: 'get',
+                                success: function(data){
+                                  $('#JobDiv_id').find('option').remove();
+                                  $.each(data, function(index, values) {
+                                    $('#JobDiv_id').append(' <option value="none" selected disabled hidden>Select an Option</option> '+'<option value="' + values.id + '">' + values.variantName +' ('+values.region + ', Chessis No.-' +values.chassis_number+  ')</option>');
+                                  });
+                                },
+                                error: function(error) {
+                                  alert(error.StatusText)
+                                }
+                             });
+
+                         }
+
+                       }
+
+                    </script>
+	  
+	  <div class="row">
+
+                    <div class="col-md-4">
+						<label></label>
+                        <select id="type" class="form-select form-select-lg" th:style="@{font-size:15px}" th:field="*{type}"  onchange="getType(this.value)">
+                            <option value="none">Select an Option</option>
+                            <option value="Vehicle">Vehicle</option>
+                            <option value="Spare_Parts">Spare_Parts</option>
+                        </select>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+                    </div>
+                    <div class="col-md-4">
+						<label>Region Transferred From</label>
+                        <select id="JobDiv_id" class="form-select form-select-lg" th:style="@{font-size:15px}" th:field="*{eriksha_variant_details_id}">
+                        </select>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('eriksha_variant_details_id')}" th:errors="*{eriksha_variant_details_id}"></div>
+                    </div>
+                    <div class="col-md-4">
+						<label>Region Transferred To</label>
+                       <select class="form-select" aria-label="Default select example" th:field="*{region}">
+                        <option th:style="@{font-size:15px}" th:each="reg : ${allRegion}" th:value="${reg.regionName}" th:text="${reg.regionName}"></option>
+                      <!--  <option th:each="region : ${allRegion}" th:value="${region.id}" th:text="${region.id}"></option>-->
+                    </select>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('region')}" th:errors="*{region}"></div>
+                    </div>
+                    
+                    
+                    <br>
+                 
+                <div class="form-group mt-3">
+          <button class="btn btn-primary btn-user btn-block" type="submit">Submit</button>
+        </div>
+
+                </div>
+                
+   </form>
+	  
+	  
+	  
+</main><!-- End #main -->
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script th:src="@{/js/main.js}"></script>
+
+
+</body>
+
+</html>

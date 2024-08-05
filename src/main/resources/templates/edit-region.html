@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	  layout:decorate="~{layouts/home_layout.html}">
+
+<head>
+  
+  <title>Region Management</title>
+ 
+  
+</head>
+
+<body>
+
+  <main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+      <h1>Region Management</h1>
+      
+    </div><!-- End Page Title -->
+    
+    
+    <section>
+		<form action="#" th:action="@{/api/region/update/{id}(id=${region.id})}" method="post" th:object="${region}">
+        <div class="container">
+			<div class="row">
+				<div class="col-md-6">
+                    <input type="text" class="form-control"  th:field="*{regionName}" th:value="${region.regionName}" >
+                </div>
+                <br><br>
+                
+                <div class="col-md-12 mt-3">
+                  <input class="form-control" type="text" id="floatingTextarea" style="height: 200px;" th:field="*{regionDetails}" th:value="${region.regionDetails}"></input>
+                </div>
+            </div>
+
+            <div class="mt-4" style="text-align: center;">
+				 
+				<button class="btn btn-primary btn-user btn-block" type="submit">Update Region </button> 
+				
+			</div>
+          </div>
+        </div>
+		</form>
+		
+		 </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  
+</body>
+
+</html>

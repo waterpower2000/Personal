@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	  layout:decorate="~{layouts/home_layout.html}">
+<head>
+    <title>Balance Sheet</title>
+  
+</head>
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: May 30 2023 with Bootstrap v5.3.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+
+<body>
+
+  <!-- ======= Header ======= -->
+  
+  <!-- ======= Sidebar ======= -->
+  
+  <main id="main" class="main" layout:fragment="content">
+
+    <div class="pagetitle">
+      <h1>Balance Sheet</h1>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><p th:text="${reg}"></p></a></li>
+      </ol>
+    </div><!-- End Page Title -->
+
+   <div th:if="${session.message}" class="container">
+        <div class="alert alert-success text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>
+    
+    <form action="#" th:action="@{/api/balance/sheet}" method="post" th:object="${createBalanceDto}">
+    <div class="container">
+      <div class="card py-4 px-4">
+        <div class="row mt-3">
+         <div class="col-md-4">
+            <input id="dateFrom" type="text" class="form-control" placeholder="Date From" th:field="*{dateFrom}" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+          </div>
+ 		 <div class="col-md-4">
+            <input id="dateTo" type="text" class="form-control" placeholder="Date To" th:field="*{dateTo}" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+          </div>
+          <div class="col-md-4 form-group mt-1">
+            <button class="btn btn-primary btn-user btn-block" type="submit">Submit</button>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+   </form>
+  
+
+</main><!-- End #main -->
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<script th:src="@{/js/main.js}"></script>
+
+
+</body>
+
+</html>

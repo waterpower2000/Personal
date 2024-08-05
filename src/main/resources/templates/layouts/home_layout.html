@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link th:href="@{/img/favicon.png}" rel="icon">
+  <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link th:href="@{https://fonts.gstatic.com}" rel="preconnect">
+  <link th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i}" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+  <link th:href="@{/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet">
+  <link th:href="@{/vendor/quill/quill.snow.css}" rel="stylesheet">
+  <link th:href="@{/vendor/quill/quill.bubble.css}" rel="stylesheet">
+  <link th:href="@{/vendor/remixicon/remixicon.css}" rel="stylesheet">
+  <link th:href="@{/vendor/simple-datatables/style.css}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  
+  <style>
+	  
+	  .hide{
+		  display: none;
+	  }
+	  
+  </style>
+</head>
+
+<body id="page-top">
+	
+	<header id="header" class="header fixed-top d-flex align-items-center bg-primary">
+
+    <div class="d-flex align-items-center justify-content-between mt-2">
+      <a href="#" class="logo d-flex align-items-center">
+        <img th:src="@{/img/mayuri.png}" alt="" >
+        <!-- <span class="d-none d-lg-block">NiceAdmin</span> -->
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+
+
+        <li class="nav-item dropdown pe-3">
+			<div class="look">
+			<a class="dropdown-item d-flex align-items-center" th:href="@{/api/logout}">
+                
+                <button type="button" class="btn btn-light"> <i class="bi bi-box-arrow-right"></i>Log Out</button>
+                
+              </a> 
+			</div>
+        <!--  <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Sysbean</span>
+          </a> End Profile Iamge Icon 
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Sysbean</h6>
+              <span></span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/api/logout}">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Log Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav>
+    <!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+<!-- Page Wrapper -->
+
+         <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">       
+<!--
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/api/home/dashboard}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li> End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/api/inventory/get}">
+          <i class="bi bi-grid"></i>
+          <span>Inventory Management</span>
+        </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" th:href="@{/api/vehicle/add/vehicle}">
+                <i class="bi bi-grid"></i>
+                <span>Add Vehicle</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" th:href="@{/api/home/purchase}">
+              <i class="bi bi-grid"></i>
+              <span>Purchase</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" th:href="@{/api/home/sales}">
+              <i class="bi bi-grid"></i>
+              <span>Sales</span>
+            </a>
+        </li>
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link collapsed" th:href="@{/api/balance/get}">-->
+<!--              <i class="bi bi-grid"></i>-->
+<!--              <span>Balance Sheet</span>-->
+<!--            </a>-->
+<!--        </li>-->
+      <li th:class="${reg == 'ALL' ? 'nav-item' : 'hide'}">
+          <a class="nav-link collapsed" th:href="@{/app/user/add-users.html}">
+              <i class="bi bi-grid"></i>
+              <span>User Management</span>
+          </a>
+    </li>   
+    <li th:class="${reg == 'ALL' ? 'nav-item' : 'hide'}">
+      <a class="nav-link collapsed" th:href="@{/api/region/add}">
+        <i class="bi bi-grid"></i>
+        <span>Region Management</span>
+      </a>
+  </li> 
+   <li th:class="${reg == 'ALL' ? 'nav-item' : 'hide'}">
+            <a class="nav-link collapsed" th:href="@{/api/stock/get}">
+              <i class="bi bi-grid"></i>
+              <span>Stock Transfer</span>
+            </a>
+   </li> 
+   
+   <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-layout-text-window-reverse"></i><span>Accounts</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a th:href="@{/api/sales/getIncome}">
+              <span>Income Ledger</span>
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/api/sales/getExpense}">
+              <span>Expense Ledger</span>
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/api/miscellaneous/get}">
+            <span>Miscellaneous Entry</span>
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/api/sales/getMain}">
+            <span>Main Ledger</span>
+              </a>
+            </li>
+              <li>
+                  <a th:href="@{/api/balance/get}">
+                      <span>Balance Sheet</span>
+                  </a>
+              </li>
+              <li>
+				  <a th:href="@{/api/sales/partPayment/getIncome}">
+                      <span>Pending Payment</span>
+                  </a>
+			  </li>
+          </ul>
+        </li>
+
+    </ul>
+  </aside>
+  
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                </form>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </a>                     
+                    </li>
+                    <div class="topbar-divider d-none d-sm-block"></div>                                
+                </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- 404 Error Text -->
+                <div layout:fragment="content"></div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+    </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+         <footer id="footer" class="footer">
+    <!-- <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div> -->
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      <span>© All Rights reserved. Designed And Developed By
+        <a href="https://sysbean.com/" target="_blank">SYSBEAN</a></span>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script th:src="@{/vendor/apexcharts/apexcharts.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/vendor/chart.js/chart.umd.js}"></script>
+  <script th:src="@{/vendor/echarts/echarts.min.js}"></script>
+  <script th:src="@{/vendor/quill/quill.min.js}"></script>
+  <script th:src="@{/vendor/simple-datatables/simple-datatables.js}"></script>
+  <script th:src="@{/vendor/tinymce/tinymce.min.js}"></script>
+  <script th:src="@{/vendor/php-email-form/validate.js}"></script>
+  <!-- Template Main JS File -->
+  <script th:src="@{/js/main.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+</body>
+
+</html>
